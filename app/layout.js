@@ -1,18 +1,33 @@
-import Logo from "./components/Logo";
-import Navigation from "./components/Navigation";
+import Logo from "./_components/Logo";
+import Navigation from "./_components/Navigation";
+import Header from "./_components/Header";
+import { Josefin_Sans } from "next/font/google";
+import "./_styles/globals.css";
+
+const josefin = Josefin_Sans({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata = {
-  title: "The Wild Oasis",
+  title: {
+    template: "%s | The Wild Oasis",
+    default: "Welcome | The Wild Oasis",
+  },
+  description:
+    "The Wild Oasis is a nature retreat offering cozy cabins, outdoor activities, and a tranquil escape from city life. Experience the beauty of nature and unwind in our serene environment.",
 };
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
-        <header>
-          <Logo />
-          <Navigation />
-        </header>
-        <main>{children}</main>
+      <body
+        className={`${josefin.className} bg-primary-950 text-primary-100 relative flex min-h-screen flex-col antialiased`}
+      >
+        <Header />
+        <div className="flex-1 px-8 py-12">
+          <main className="mx-auto max-w-7xl">{children}</main>
+        </div>
+
         <footer>Copyright by The Wild Oasis</footer>
       </body>
     </html>
