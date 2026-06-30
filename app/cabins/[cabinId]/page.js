@@ -19,7 +19,6 @@ export default async function Page({ params }) {
   const cabin = await getCabin(cabinId);
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin;
-  console.log(params);
   return (
     <div className="mx-auto mt-8 max-w-6xl">
       <div className="mb-24 grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 px-10 py-3">
