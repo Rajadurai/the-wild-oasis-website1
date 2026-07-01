@@ -1,6 +1,7 @@
-import { getCabin } from "../../_lib/data-service.js";
+import { getCabin, getCabins } from "../../_lib/data-service.js";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 // export const metadata = {
 //   title: "Cabin",
@@ -14,11 +15,22 @@ export async function generateMetadata({ params }) {
   };
 }
 
+export async function generateStaticParams() {
+  const cabins = await getCabins(); // no argument — fetches ALL cabins
+  const ids = cabins.map((cabin) => ({
+    cabinId: String(cabin.id),
+  }));
+  return ids;
+}
+
 export default async function Page({ params }) {
   const { cabinId } = await params;
   const cabin = await getCabin(cabinId);
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin;
+  if (!cabin) {
+    notFound();
+  }
   return (
     <div className="mx-auto mt-8 max-w-6xl">
       <div className="mb-24 grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 px-10 py-3">
